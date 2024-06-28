@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   List,
@@ -17,7 +18,7 @@ import {
 import { Menu } from '@mui/icons-material';
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 import { AiOutlineCompass } from "react-icons/ai";
-import SearchIcon from '@mui/icons-material/Search'; // Correct import for SearchIcon
+import SearchIcon from '@mui/icons-material/Search';
 import './styles.css';
 
 const CompanyEnum = {
@@ -30,7 +31,15 @@ const CompanyEnum = {
 
 const Sidebar = () => {
   const [selectedOption, setSelectedOption] = useState(CompanyEnum.INDIA_FONT);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
+
+  const handleNavigation = (path, item) => {
+    setSelectedItem(item);
+    navigate(path);
+  };
+
   const filteredCompanies = Object.values(CompanyEnum).filter(company =>
     company.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -58,7 +67,6 @@ const Sidebar = () => {
 
       {/* Company Selector */}
       <Box
-        fullWidth
         sx={{
           height: '40px',
           mb: '16px',
@@ -140,71 +148,91 @@ const Sidebar = () => {
 
       {/* Menu List */}
       <List>
-        <ListItem sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '8px 16px',
-          cursor: 'pointer',
-          color: '#191919',
-          '&:hover': { backgroundColor: '#e4e7eb' },
-        }}>
+        <ListItem
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '8px 16px',
+            cursor: 'pointer',
+            color: '#191919',
+            backgroundColor: selectedItem === 'manage-posts' ? '#FFFFFF' : 'transparent',
+            '&:hover': { backgroundColor: '#F9F9F9' },
+          }}
+          onClick={() => handleNavigation('/manage-posts', 'manage-posts')}
+        >
           <ListItemIcon sx={{ minWidth: '40px' }}><Menu /></ListItemIcon>
           <ListItemText primary="Manage Posts" sx={{ color: '#191919' }} />
           <Badge badgeContent={6} showZero sx={{ color: '#9F9F9F' }} />
         </ListItem>
 
-        <ListItem sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '8px 16px',
-          cursor: 'pointer',
-          color: '#191919',
-          '&:hover': { backgroundColor: '#e4e7eb' },
-        }}>
+        <ListItem
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '8px 16px',
+            cursor: 'pointer',
+            color: '#191919',
+            backgroundColor: selectedItem === 'manage-campaigns' ? '#FFFFFF' : 'transparent',
+            '&:hover': { backgroundColor: '#F9F9F9' },
+          }}
+          onClick={() => handleNavigation('/manage-campaigns', 'manage-campaigns')}
+        >
           <ListItemIcon sx={{ minWidth: '40px' }}><Menu /></ListItemIcon>
           <ListItemText primary="Manage Campaigns" sx={{ color: '#191919' }} />
           <Badge badgeContent={6} showZero sx={{ color: '#9F9F9F' }} />
         </ListItem>
 
-        <ListItem sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '8px 16px',
-          cursor: 'pointer',
-          color: '#191919',
-          '&:hover': { backgroundColor: '#e4e7eb' },
-        }}>
+        <ListItem
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '8px 16px',
+            cursor: 'pointer',
+            color: '#191919',
+            backgroundColor: selectedItem === 'manage-accounts' ? '#FFFFFF' : 'transparent',
+            '&:hover': { backgroundColor: '#F9F9F9' },
+          }}
+          onClick={() => handleNavigation('/manage-accounts', 'manage-accounts')}
+        >
           <ListItemIcon sx={{ minWidth: '40px' }}><Menu /></ListItemIcon>
           <ListItemText primary="Manage Accounts" sx={{ color: '#191919' }} />
           <Badge badgeContent={0} showZero sx={{ color: '#9F9F9F' }} />
         </ListItem>
 
-        <ListItem sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '8px 16px',
-          cursor: 'pointer',
-          color: '#191919',
-          '&:hover': { backgroundColor: '#e4e7eb' },
-        }}>
+        <ListItem
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '8px 16px',
+            cursor: 'pointer',
+            color: '#191919',
+            backgroundColor: selectedItem === 'messaging' ? '#FFFFFF' : 'transparent',
+            '&:hover': { backgroundColor: '#F9F9F9' },
+          }}
+          onClick={() => handleNavigation('/messaging', 'messaging')}
+        >
           <ListItemIcon sx={{ minWidth: '40px' }}><Menu /></ListItemIcon>
           <ListItemText primary="Messaging" sx={{ color: '#191919' }} />
           <Badge badgeContent={0} showZero sx={{ color: '#9F9F9F' }} />
         </ListItem>
 
-        <ListItem sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '8px 16px',
-          cursor: 'pointer',
-          color: '#191919',
-          '&:hover': { backgroundColor: '#e4e7eb' },
-        }}>
+        <ListItem
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '8px 16px',
+            cursor: 'pointer',
+            color: '#191919',
+            backgroundColor: selectedItem === 'comments' ? '#FFFFFF' : 'transparent',
+            '&:hover': { backgroundColor: '#F9F9F9' },
+          }}
+          onClick={() => handleNavigation('/comments', 'comments')}
+        >
           <ListItemIcon sx={{ minWidth: '40px' }}><Menu /></ListItemIcon>
           <ListItemText primary="Comments" sx={{ color: '#191919' }} />
           <Badge badgeContent={0} showZero sx={{ color: '#9F9F9F' }} />
@@ -217,20 +245,23 @@ const Sidebar = () => {
         bottom: '100px',
         width: 'calc(100% - 32px)',
       }}>
-        <ListItem sx={{
-          position: 'absolute',
-          bottom: '16px',
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '8px 16px',
-          cursor: 'pointer',
-          color: '#191919',
-          backgroundColor: 'white',
-          borderRadius: '5px',
-          '&:hover': { backgroundColor: '#e4e7eb' },
-        }}>
+        <ListItem
+          sx={{
+            position: 'absolute',
+            bottom: '16px',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '8px 16px',
+            cursor: 'pointer',
+            color: '#191919',
+            backgroundColor: selectedItem === 'manage-companies' ? '#FFFFFF' : 'transparent',
+            borderRadius: '5px',
+            '&:hover': { backgroundColor: '#F9F9F9' },
+          }}
+          onClick={() => handleNavigation('/manage-companies', 'manage-companies')}
+        >
           <ListItemIcon sx={{ minWidth: '40px' }}><Menu /></ListItemIcon>
           <ListItemText primary="Manage Companies" sx={{ color: '#191919' }} />
           <Badge badgeContent={0} showZero sx={{ color: '#9F9F9F' }} />
